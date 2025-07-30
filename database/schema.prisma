@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../backend/prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  fbId      String    @unique
+  companies Company[]
+  payments  Payment[]
+  createdAt DateTime  @default(now())
+}
+
+model Company {
+  id              String     @id @default(cuid())
+  userId          String
+  user            User       @relation(fields: [userId], references: [id])
+  name            String     // ← Компанийн нэр
+  regNo           String     // ← Регистр
+  etaxUsername    String     // ← Etax хэрэглэгчийн нэр
+  encryptedPass   String     // ← Etax encrypted нууц үг
+  keyFileBase64   String     // ← key файл base64-encoded
+  keyPassword     String     // ← key файлын нууц үг
+  reports         Report[]
+  schedules       Schedule[]
+  createdAt       DateTime   @default(now())
+}
+
+model Report {
+  id          String    @id @default(cuid())
+  companyId   String
+  company     Company   @relation(fields: [companyId], references: [id])
+  submittedAt DateTime  @default(now())
+  success     Boolean
+  message     String
+}
+
+model Payment {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  qpayTxnId String   @unique
+  amount    Int
+  paidAt    DateTime
+}
+
+model Schedule {
+  id         String    @id @default(cuid())
+  companyId  String
+  company    Company   @relation(fields: [companyId], references: [id])
+  type       String    // monthly / quarterly
+  nextSubmit DateTime
+}

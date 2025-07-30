@@ -1,0 +1,22 @@
+{
+  "name": "xsender-mvp",
+  "scripts": {
+    "dev:backend": "ts-node backend/server.ts",
+    "dev:worker": "ts-node puppeteer/worker.ts",
+    "db:generate": "prisma generate --schema=database/schema.prisma",
+    "db:migrate": "prisma migrate dev --schema=database/schema.prisma"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.13.0",
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "prisma": "^5.0.0",
+    "puppeteer": "^21.3.8"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.0"
+  }
+}

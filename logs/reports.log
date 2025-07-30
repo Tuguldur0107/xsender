@@ -1,0 +1,2 @@
+[2025-07-30T17:20:02.515Z] companyId=test-company-001 success=false message="Error: etax automation failed: Error: No element found for selector: #loginBtn"
+[2025-07-30T17:28:59.678Z] companyId=test-company-001 success=true message="Report submitted successfully"
