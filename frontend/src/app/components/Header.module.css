@@ -1,0 +1,132 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.logoText {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  display: inline-block;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.logoText:hover {
+  text-shadow: 0 0 12px #3b82f6, 0 0 18px #10b981;
+}
+
+.logoX {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: #22c55e;
+  font-size: 1.9rem;
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+}
+
+.nav {
+  display: flex;
+}
+
+.navList {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navLink {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #f1f5f9;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(6px);
+  border: none;
+  outline: none;
+  box-shadow: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.navLink:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #93c5fd;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: none;
+  box-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.dropdown:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4), 0 0 4px rgba(59, 130, 246, 0.2) inset;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  padding: 12px 0;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08); /* ил тод цагаан */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+
+.dropdownItem {
+  display: block;
+  padding: 12px 18px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #ffffff; /* ← энэ мөрийг өөрчилсөн */
+  text-decoration: none;
+  transition: all 0.15s ease;
+  border-left: 4px solid transparent;
+}
+
+.dropdownItem:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #ffffff; /* ← энэ мөрийг цагаан болгож өөрчилсөн */
+  color: #ffffff;
+}
+
+.navLabel {
+  color: #ffffff; /* эсвэл #f9fafb */
+  font-weight: 600;
+}
