@@ -5,65 +5,72 @@ import { useEffect, useState } from 'react'
 
 
 export default function Home() {
-  const [papers, setPapers] = useState<number[]>([])
+  const [papers, setPapers] = useState<
+    { id: number; left: string; top: string; delay: string }[]
+  >([])
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setPapers((prev) => [...prev, Date.now()])
+      const paper = {
+        id: Date.now(),
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 80 + 10}%`,
+        delay: `${Math.random() * 2}s`,
+      }
+      setPapers((prev) => [...prev, paper])
     }, 1500)
+
     return () => clearInterval(interval)
   }, [])
 
   return (
     <main className={styles.main}>
-        {/* 🕊️ Floating Morphing Papers */}
-      <div className={styles.paperContainer}>
-        {papers.map((id) => (
-          <div
-            key={id}
-            className={styles.paper}
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 80 + 10}%`,
-              animationDelay: `${Math.random() * 2}s`,
-            }}
-          >
-            <svg
-              className={styles.birdSvg}
-              viewBox="0 0 100 100"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path fill="white">
-                <animate
-                  attributeName="d"
-                  dur="0.6s"
-                  repeatCount="indefinite"
-                  values="
-                    M10,50 Q50,10 90,50 Q50,90 10,50;
-                    M10,55 Q50,5 90,55 Q50,95 10,55;
-                    M10,50 Q50,10 90,50 Q50,90 10,50;
-                  "
-                />
-              </path>
-            </svg>
-          </div>
-        ))}
-      </div>
-      
-      
-
 
       <div className={styles.fixedBackground}></div>
+
+        {/* 🕊️ Floating Morphing Papers */}
+        <div className={styles.paperContainer}>
+          {papers.map((paper) => (
+            <div
+              key={paper.id}
+              className={styles.paper}
+              style={{
+                left: paper.left,
+                top: paper.top,
+                animationDelay: paper.delay,
+              }}
+            >
+              <svg
+                className={styles.birdSvg}
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path fill="white">
+                  <animate
+                    attributeName="d"
+                    dur="0.6s"
+                    repeatCount="indefinite"
+                    values="
+                      M10,50 Q50,10 90,50 Q50,90 10,50;
+                      M10,55 Q50,5 90,55 Q50,95 10,55;
+                      M10,50 Q50,10 90,50 Q50,90 10,50;
+                    "
+                  />
+                </path>
+              </svg>
+            </div>
+          ))}
+        </div>
 
       {/* 🌈 Hero */}
       <section className={styles.hero}>
         <div className={styles.heroGlass}>
           <h1 className={styles.heroTitle}>
-            X тайланг март. <br />
-            X-SENDER илгээнэ.
+            Таны өмнөөс X-SENDER <br />
+            X тайлан илгээнэ
           </h1>
           <p className={styles.description}>
-            3 тайланг үнэгүй, автоматаар, алдаагүй бөгөөд хугацаанд нь илгээж туршаарай.
+            3 тайланг үнэгүй, автоматаар, алдаагүй бөгөөд хугацаанд нь илгээж туршаарай
           </p>
           <div className={styles.buttonGroup}>
           <Link
@@ -72,7 +79,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            💬 Facebook-р нэвтэрч бүртгүүлэх
+            💬 Facebook-р бүртгүүлэх
           </Link>
           </div>
         </div>
