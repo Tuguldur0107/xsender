@@ -10,29 +10,40 @@ router.post("/", async (req, res) => {
   const body = req.body;
 
   if (body.object === "page") {
-    for (const entry of body.entry) {
-      const webhook_event = entry.messaging[0];
-      const senderId = webhook_event.sender.id;
+    for (const entry of body.entry || []) {
+      const webhook_event = entry.messaging?.[0];
+      const senderId = webhook_event?.sender?.id;
 
-      // ✅ Энд мессеж буцааж илгээж байна
-      await axios.post(
-        `https://graph.facebook.com/v18.0/${PAGE_ID}/messages`,
-        {
-          messaging_type: "RESPONSE",
-          recipient: { id: senderId },
-          message: { text: "Танд баярлалаа! Тайлан илгээх товчийг дарна уу." },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${PAGE_ACCESS_TOKEN}`,
+      if (!senderId) {
+        console.warn("⚠️ Sender ID байхгүй байна.");
+        continue;
+      }
+
+      try {
+        // ✅ Мессеж илгээх оролдлого
+        const fbRes = await axios.post(
+          `https://graph.facebook.com/v18.0/${PAGE_ID}/messages`,
+          {
+            messaging_type: "RESPONSE",
+            recipient: { id: senderId },
+            message: { text: "Танд баярлалаа! Тайлан илгээх товчийг дарна уу." },
           },
-        }
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${PAGE_ACCESS_TOKEN}`,
+            },
+          }
+        );
+        console.log("✅ FB хариу:", fbRes.data);
+      } catch (err: any) {
+        console.error("❌ FB API алдаа:", err.response?.data || err.message);
+      }
     }
-    res.sendStatus(200);
-  } else {
-    res.sendStatus(404);
+
+    return res.sendStatus(200);
   }
+
+  return res.sendStatus(404);
 });
 
 export default router;

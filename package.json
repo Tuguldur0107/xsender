@@ -3,6 +3,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/backend/server.js",
+    "dev": "ts-node backend/server.ts",
     "dev:backend": "ts-node backend/server.ts",
     "dev:worker": "ts-node puppeteer/worker.ts",
     "db:generate": "prisma generate --schema=database/schema.prisma",
@@ -16,10 +17,10 @@
     "express": "^4.18.2",
     "playwright": "^1.54.2",
     "prisma": "^5.0.0",
-    "ts-node": "^10.x.x",
     "typescript": "^5.9.2"
   },
   "devDependencies": {
-    "@types/express": "^5.0.3"
+    "@types/express": "^5.0.3",
+    "ts-node": "^10.9.2"
   }
 }
