@@ -1,28 +1,38 @@
-// backend/routes/webhook.ts
-import express from 'express';
+import express from "express";
+import axios from "axios";
 
 const router = express.Router();
 
-const VERIFY_TOKEN = 'xsender_verify_token'; // энэ чинь Facebook дээрх Verify Token-той ижил байна
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const PAGE_ID = process.env.PAGE_ID;
 
-// Messenger webhook verification
-router.get('/', (req, res) => {
-  const mode = req.query['hub.mode'];
-  const token = req.query['hub.verify_token'];
-  const challenge = req.query['hub.challenge'];
+router.post("/", async (req, res) => {
+  const body = req.body;
 
-  if (mode === 'subscribe' && token === VERIFY_TOKEN) {
-    console.log('✅ Webhook verified by Facebook');
-    res.status(200).send(challenge);
+  if (body.object === "page") {
+    for (const entry of body.entry) {
+      const webhook_event = entry.messaging[0];
+      const senderId = webhook_event.sender.id;
+
+      // ✅ Энд мессеж буцааж илгээж байна
+      await axios.post(
+        `https://graph.facebook.com/v18.0/${PAGE_ID}/messages`,
+        {
+          messaging_type: "RESPONSE",
+          recipient: { id: senderId },
+          message: { text: "Танд баярлалаа! Тайлан илгээх товчийг дарна уу." },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${PAGE_ACCESS_TOKEN}`,
+          },
+        }
+      );
+    }
+    res.sendStatus(200);
   } else {
-    res.sendStatus(403);
+    res.sendStatus(404);
   }
-});
-
-// Placeholder for POST events
-router.post('/', (req, res) => {
-  console.log('📨 Received POST:', JSON.stringify(req.body, null, 2));
-  res.sendStatus(200);
 });
 
 export default router;
