@@ -1,5 +1,5 @@
-import puppeteer from "puppeteer";
-import { blockIfCaptcha } from "./captcha";
+const puppeteer = require("puppeteer");
+const { blockIfCaptcha } = require("./captcha");
 
 export async function submitXReport(regNo: string, password: string) {
   const browser = await puppeteer.launch({
