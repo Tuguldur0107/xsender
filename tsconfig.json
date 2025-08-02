@@ -8,7 +8,8 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "rootDir": ".",                       // эх сурвалж root
-    "outDir": "dist"                      // transpile хийгдсэн JS гарах байрлал
+    "outDir": "dist",                      // transpile хийгдсэн JS гарах байрлал
+    "skipLibCheck": true
   },
   "include": ["backend", "puppeteer"]     // эдгээр хавтас дахь кодыг transpile хийнэ
 }
