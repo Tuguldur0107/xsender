@@ -1,18 +1,16 @@
 import { submitXReport } from "./etax";
-import { logReport } from "./logger";
 
-export async function triggerReportSubmission(companyId: string): Promise<string> {
+export async function triggerReportSubmission(companyId: string): Promise<void> {
+  const dummyData = {
+    regNo: "1234567",
+    password: "password123",
+  };
+
   try {
-    const dummyData = {
-      regNo: "1234567",
-      password: "supersecret",
-    };
-
+    console.log(`🚀 Тайлан илгээж байна: companyId = ${companyId}`);
     const result = await submitXReport(dummyData.regNo, dummyData.password);
-    await logReport(companyId, true, result);
-    return result;
+    console.log(`✅ Тайлан илгээв: ${result}`);
   } catch (err) {
-    await logReport(companyId, false, String(err));
-    throw err;
+    console.error("❌ Алдаа гарлаа:", err);
   }
 }
