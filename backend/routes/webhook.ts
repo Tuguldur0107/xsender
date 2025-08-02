@@ -3,7 +3,7 @@ import axios from "axios";
 
 const router = express.Router();
 
-const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 const PAGE_ID = process.env.PAGE_ID;
 
 router.post("/", async (req, res) => {
