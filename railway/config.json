@@ -1,8 +1,8 @@
 {
   "build": {
-    "command": "npm install && npm run build"
+    "command": "npx tsc"
   },
   "start": {
-    "command": "npm run start"
+    "command": "node dist/backend/server.js"
   }
 }
