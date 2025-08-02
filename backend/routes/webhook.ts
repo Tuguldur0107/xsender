@@ -15,11 +15,11 @@ router.post("/", async (req, res) => {
 
       for (const webhook_event of messagingEvents) {
         const senderId = webhook_event?.sender?.id;
-        const messageText = webhook_event?.message?.text;
+        const message = webhook_event?.message;
 
-        // ✅ Зөвхөн хэрэглэгчийн илгээсэн текст мессеж дээр хариу өгнө
-        if (!senderId || !messageText) {
-          console.log("⚠️ Хэрэглэгчийн текст мессеж биш тул алгаслаа.");
+        // 🛑 Хэрвээ текст биш, эсвэл мессеж байхгүй бол skip
+        if (!senderId || !message || !message.text) {
+          console.log("⚠️ Текст мессеж биш тул skip хийлээ");
           continue;
         }
 
