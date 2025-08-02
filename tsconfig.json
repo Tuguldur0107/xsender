@@ -2,12 +2,13 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "CommonJS",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist",
+    "rootDir": ".",
     "strict": true,
-    "skipLibCheck": true,
-    "outDir": "./dist"
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["backend/**/*.ts", "puppeteer/**/*.ts", "database/**/*.ts"]
+  "include": ["backend", "puppeteer"]
 }
