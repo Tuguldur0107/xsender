@@ -1,7 +1,7 @@
-const { submitXReport } = require("./etax");
-const { logReport } = require("./logger");
+import { submitXReport } from "./etax";
+import { logReport } from "./logger";
 
-async function triggerReportSubmission(companyId: string): Promise<string> {
+export async function triggerReportSubmission(companyId: string): Promise<string> {
   try {
     const dummyData = {
       regNo: "1234567",
@@ -16,8 +16,3 @@ async function triggerReportSubmission(companyId: string): Promise<string> {
     throw err;
   }
 }
-
-// 👇 TypeScript-д module гэж ойлгуулах CommonJS export
-export = {
-  triggerReportSubmission,
-};

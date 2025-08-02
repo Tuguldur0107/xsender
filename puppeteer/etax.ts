@@ -1,7 +1,7 @@
-const puppeteer = require("puppeteer");
-const { blockIfCaptcha } = require("./captcha");
+import puppeteer from "puppeteer";
+import { blockIfCaptcha } from "./captcha";
 
-async function submitXReport(regNo: string, password: string): Promise<string> {
+export async function submitXReport(regNo: string, password: string): Promise<string> {
   const browser = await puppeteer.launch({
     headless: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
@@ -23,21 +23,11 @@ async function submitXReport(regNo: string, password: string): Promise<string> {
     ]);
 
     await blockIfCaptcha(page);
-
-    console.log("📄 X тайлан руу шилжиж байна...");
-    // TODO: Илгээх товч дарах логик
-
     console.log("✅ Тайлан илгээх процесс дууслаа.");
     await browser.close();
     return "Report submitted successfully";
   } catch (err) {
     await browser.close();
-    console.error("❌ Automation error:", err);
     throw new Error("etax automation failed: " + err);
   }
 }
-
-// 👇 TypeScript + CommonJS модуль болгож экспорт хийж байна
-export = {
-  submitXReport,
-};
