@@ -1,7 +1,10 @@
 const puppeteer = require("puppeteer");
 const { blockIfCaptcha } = require("./captcha");
 
-export async function submitXReport(regNo: string, password: string) {
+exports.submitXReport = async function (
+  regNo: string,
+  password: string
+): Promise<string> {
   const browser = await puppeteer.launch({
     headless: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
@@ -13,7 +16,6 @@ export async function submitXReport(regNo: string, password: string) {
     console.log("🔐 Etax руу нэвтэрч байна...");
     await page.goto("https://etax.mta.mn", { waitUntil: "networkidle2" });
 
-    // SSO login руу автоматаар redirect хийгдсэн гэж үзнэ
     await page.waitForSelector("input#username", { timeout: 5000 });
     await page.type("input#username", regNo);
     await page.type("input#password", password);
@@ -23,22 +25,17 @@ export async function submitXReport(regNo: string, password: string) {
       page.waitForNavigation({ waitUntil: "networkidle2" }),
     ]);
 
-    // CAPTCHA шалгах
     await blockIfCaptcha(page);
 
     console.log("📄 X тайлан руу шилжиж байна...");
-    // TODO: X тайлан бүртгэх UI-руу орох
-    // await page.goto("https://etax.mta.mn/taxform/X-zero", { waitUntil: "networkidle2" });
-
-    // TODO: Илгээх товч дарах
-    // await page.click("#submitBtn");
+    // TODO: X тайлан бүртгэх хэсгийг дараа хийнэ
 
     console.log("✅ Тайлан илгээх процесс дууслаа.");
     await browser.close();
     return "Report submitted successfully";
   } catch (err) {
-    console.error("❌ Automation error:", err);
     await browser.close();
+    console.error("❌ Automation error:", err);
     throw new Error("etax automation failed: " + err);
   }
-}
+};
