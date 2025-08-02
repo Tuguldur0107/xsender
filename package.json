@@ -1,7 +1,8 @@
 {
   "name": "xsender-mvp",
   "scripts": {
-    "start": "ts-node backend/server.ts",
+    "build": "tsc",
+    "start": "node dist/backend/server.js",
     "dev:backend": "ts-node backend/server.ts",
     "dev:worker": "ts-node puppeteer/worker.ts",
     "db:generate": "prisma generate --schema=database/schema.prisma",
