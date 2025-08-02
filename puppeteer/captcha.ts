@@ -1,8 +1,9 @@
-import { Page } from "puppeteer";
+// puppeteer/captcha.ts
+import { Page } from 'playwright';
 
-export async function blockIfCaptcha(page: Page) {
-  const bodyText = await page.evaluate(() => document.body.innerText);
-  if (bodyText.includes("CAPTCHA") || bodyText.includes("бот шалгалт")) {
-    throw new Error("❌ CAPTCHA илэрсэн тул automation зогслоо.");
+export async function blockIfCaptcha(page: Page): Promise<void> {
+  const content = await page.content();
+  if (content.includes('captcha') || content.includes('шинэчлээд орно уу')) {
+    throw new Error('🛑 CAPTCHA илэрсэн тул процесс зогслоо!');
   }
 }
