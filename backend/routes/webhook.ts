@@ -7,20 +7,23 @@ const PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 const PAGE_ID = process.env.PAGE_ID;
 
 router.post("/", async (req, res) => {
+  // ✅ Хамгийн эхэнд OK буцаана
+  res.sendStatus(200);
+
   const body = req.body;
 
-  if (body.object === "page") {
-    for (const entry of body.entry || []) {
-      const webhook_event = entry.messaging?.[0];
-      const senderId = webhook_event?.sender?.id;
+  if (body.object !== "page") return;
 
-      if (!senderId) {
-        console.warn("⚠️ Sender ID байхгүй байна.");
-        continue;
-      }
+  for (const entry of body.entry || []) {
+    const messagingEvents = entry.messaging || [];
+
+    for (const webhook_event of messagingEvents) {
+      const senderId = webhook_event?.sender?.id;
+      const messageText = webhook_event?.message?.text;
+
+      if (!senderId || !messageText) continue;
 
       try {
-        // ✅ Мессеж илгээх оролдлого
         const fbRes = await axios.post(
           `https://graph.facebook.com/v18.0/${PAGE_ID}/messages`,
           {
@@ -39,11 +42,7 @@ router.post("/", async (req, res) => {
         console.error("❌ FB API алдаа:", err.response?.data || err.message);
       }
     }
-
-    return res.sendStatus(200);
   }
-
-  return res.sendStatus(404);
 });
 
 export default router;
